@@ -268,8 +268,13 @@ boolean moved = false;
        Serial.println( runSpeed); 
             
        lastDistance = cumDistance;
-  
+
+      #ifdef ZERO_OFFSET
+       float dacval = (maxDACval + runSpeed/MAXSPEED * maxDACval)/2; 
+      #else
        float dacval = abs(runSpeed)/MAXSPEED * maxDACval; 
+      #endif 
+      
        if( dacval < 0 ) dacval = 0;   
                
        if( dacval > maxDACval) dacval = maxDACval; 
